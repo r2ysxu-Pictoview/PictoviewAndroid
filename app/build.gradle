@@ -29,4 +29,5 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile files('libs/volley.jar')
     compile files('libs/json-20090211.jar')
+    compile files('libs/commons-codec-1.10.jar')
 }

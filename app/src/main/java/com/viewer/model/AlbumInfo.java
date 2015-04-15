@@ -9,12 +9,22 @@ public class AlbumInfo {
     private long id;
     private String name;
     private String subtitle;
+    private long coverId;
     private Bitmap bitmap;
 
-    public AlbumInfo(long id, String name, String subtitle) {
+    public AlbumInfo(long id, String name, String subtitle, long coverId) {
         this.id = id;
         this.name = name;
         this.subtitle = subtitle;
+        this.coverId = coverId;
+    }
+
+    public long getCoverId() {
+        return coverId;
+    }
+
+    public void setCoverId(long coverId) {
+        this.coverId = coverId;
     }
 
     public Bitmap getBitmap() {

@@ -9,9 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/list_albumlist_group_thumbnail" />
+            android:layout_width="200px"
+            android:layout_height="200px"
+            android:scaleType="fitXY"
+            android:background="#000000"
+            android:padding="1dp"
+            android:id="@+id/list_albumlist_group_thumbnail"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
