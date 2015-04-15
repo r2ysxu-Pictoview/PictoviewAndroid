@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <ImageView
+        android:layout_width="200px"
+        android:layout_height="200px"
+        android:scaleType="fitXY"
+        android:background="#000000"
+        android:padding="1dp"
+        android:id="@+id/list_albumlist_group_thumbnail" />
+
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_width="200px"
-            android:layout_height="200px"
-            android:scaleType="fitXY"
-            android:background="#000000"
-            android:padding="1dp"
-            android:id="@+id/list_albumlist_group_thumbnail"/>
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:textColor="#FFFFFF"
+            android:id="@+id/list_albumlist_group_subtitle" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,11 +36,11 @@
             android:id="@+id/list_albumlist_group_name" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Small Text"
-        android:textColor="#FFFFFF"
-        android:id="@+id/list_albumlist_group_subtitle" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:src="@android:drawable/arrow_down_float"
+        android:id="@+id/list_albumlist_expander"
+        android:clickable="true" />
+
 </LinearLayout>

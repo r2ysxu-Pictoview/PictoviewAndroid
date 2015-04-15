@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.viewer" >
 
-    <uses-sdk android:minSdkVersion="14" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -26,6 +25,10 @@
         <activity
             android:name="com.viewer.activity.MenuActivity"
             android:label="@string/title_activity_menu" >
+        </activity>
+        <activity
+            android:name="com.viewer.activity.PhotosActivity"
+            android:label="@string/title_activity_photos" >
         </activity>
     </application>
 

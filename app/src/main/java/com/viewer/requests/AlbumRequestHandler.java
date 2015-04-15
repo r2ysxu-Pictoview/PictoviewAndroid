@@ -1,9 +1,6 @@
 package com.viewer.requests;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -25,7 +22,6 @@ import java.util.List;
  */
 public class AlbumRequestHandler extends ClientRequestHandler {
 
-    private Context context;
     private AlbumExpandableListAdapter albumAdapter;
     private HashMap<Long, AlbumInfo> albumMap;
     private final long userid = 1;
@@ -101,15 +97,8 @@ public class AlbumRequestHandler extends ClientRequestHandler {
     private void onCoverImageResponse(long albumid, String response) {
         List<AlbumInfo> albumInfos =  albumAdapter.getAlbumInfos();
         AlbumInfo albumInfo = albumMap.get(albumid);
-
-        // Decode Image
-        byte[] imageBytes = Base64.decode(response, Base64.URL_SAFE);
-        Log.i("bytes", imageBytes.toString());
-        Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-        albumInfo.setBitmap(imageBitmap);
-
+        albumInfo.setBitmap(decodeImage(response));
         albumInfos.add(albumInfo);
-
         albumAdapter.notifyDataSetChanged();
     }
 
