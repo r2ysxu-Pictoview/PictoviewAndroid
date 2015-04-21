@@ -11,12 +11,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.viewer.model.PhotoInfo;
+import com.viewer.view.controller.ImageViewOnClickListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by ArthurXu on 15/04/2015.
@@ -24,7 +28,8 @@ import java.util.HashMap;
 public class PhotoRequestHandler extends ClientRequestHandler {
 
     private GridLayout photoGrid;
-    private HashMap<Long, PhotoInfo> photoMap;
+    private HashMap<Long, ImageView> photoMap;
+    private List<PhotoInfo> photoInfos;
     private final long userid = 1;
 
     public PhotoRequestHandler(Context context) {
@@ -57,17 +62,26 @@ public class PhotoRequestHandler extends ClientRequestHandler {
     private void onListResponse(String response) {
         try {
             JSONArray photoList = new JSONArray(response);
-            photoMap = new HashMap<Long, PhotoInfo>();
+            photoMap = new HashMap<Long, ImageView>();
+            photoInfos = new ArrayList<PhotoInfo>();
 
             for (int i = 0; i < photoList.length(); i++) {
                 JSONObject obj = photoList.getJSONObject(i);
 
                 long id = obj.getLong("id");
-                PhotoInfo photoInfo = new PhotoInfo(id);
+                String name = obj.getString("name");
+                PhotoInfo photoInfo = new PhotoInfo(id, name);
 
                 if (id != 0) {
-                    photoMap.put(id, photoInfo);
-                    sendImageThumbnailRequest(id, "/PictureViewerRestServer/rest/viewer/thumbnail?usr=" + userid + "&photoid=" + id);
+                    int index = Collections.binarySearch(photoInfos, photoInfo);
+                    if (index < 0) {
+                        index = -index - 1;
+                        photoInfos.add(index, photoInfo);
+                        ImageView view = createImageView(index);
+                        photoGrid.addView(view, index);
+                        photoMap.put(id, view);
+                        sendImageThumbnailRequest(id, "/PictureViewerRestServer/rest/viewer/thumbnail?usr=" + userid + "&photoid=" + id);
+                    }
                 }
             }
 
@@ -92,16 +106,21 @@ public class PhotoRequestHandler extends ClientRequestHandler {
         queue.add(stringRequest);
     }
 
-    private void onImageResponse(long id, String response) {
-        PhotoInfo photoInfo = photoMap.get(id);
-        photoInfo.setBitmap(decodeImage(response));
-
+    private ImageView createImageView(int index) {
         ImageView imageView = new ImageView(context);
-        imageView.setImageBitmap(photoInfo.getBitmap());
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         imageView.setLayoutParams(new ViewGroup.LayoutParams(200, 200));
 
-        photoGrid.addView(imageView);
+        // Set Listener
+        imageView.setOnClickListener(new ImageViewOnClickListener(context, photoInfos, index));
+
+        return imageView;
+    }
+
+    private void onImageResponse(long id, String response) {
+        ImageView imageView = photoMap.get(id);
+        imageView.setImageBitmap(decodeImage(response));
+
     }
 
     private void onClientErrorResponse() {

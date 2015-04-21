@@ -30,6 +30,10 @@
             android:name="com.viewer.activity.PhotosActivity"
             android:label="@string/title_activity_photos" >
         </activity>
+        <activity
+            android:name="com.viewer.activity.ImageActivity"
+            android:label="@string/title_activity_image" >
+        </activity>
     </application>
 
 </manifest>

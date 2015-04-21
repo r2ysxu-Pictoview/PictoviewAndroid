@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Created by ArthurXu on 13/04/2015.
  */
-public class AlbumInfo implements Serializable {
+public class AlbumInfo implements Serializable, Comparable<AlbumInfo> {
     private final long id;
     private String name;
     private String subtitle;
@@ -55,5 +55,11 @@ public class AlbumInfo implements Serializable {
 
     public void setSubtitle(String subtitle) {
         this.subtitle = subtitle;
+    }
+
+    @Override
+    public int compareTo(AlbumInfo s) {
+        if (this.name == null) return 0;
+        return this.name.compareTo(s.getName());
     }
 }
