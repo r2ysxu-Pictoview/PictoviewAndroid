@@ -19,14 +19,12 @@ public class ImagePagerAdapter extends FragmentStatePagerAdapter {
 
     private List<PhotoInfo> photoInfos;
     private List<ScreenSlidePageFragment> fragments;
-    private List<Boolean> imageLoaded;
     private Context context;
 
     public ImagePagerAdapter(Context context, FragmentManager fm, List<PhotoInfo> photoInfos) {
         super(fm);
         this.photoInfos = photoInfos;
         this.context = context;
-        imageLoaded = new ArrayList<Boolean>();
         generateFragments();
     }
 
@@ -34,24 +32,25 @@ public class ImagePagerAdapter extends FragmentStatePagerAdapter {
         fragments = new ArrayList<ScreenSlidePageFragment>();
         for (int i = 0; i < photoInfos.size(); i++) {
             fragments.add(new ScreenSlidePageFragment());
-            imageLoaded.add(false);
         }
     }
+
+
 
     public List<PhotoInfo> getPhotoInfos() {
         return photoInfos;
     }
 
-    public boolean isImageLoaded(int i) {
-        return imageLoaded.get(i);
+    public List<ScreenSlidePageFragment> getFragments() {
+        return fragments;
     }
 
     @Override
     public Fragment getItem(int i) {
         ImageRequestHandler handler = new ImageRequestHandler(context, this);
-        if (!isImageLoaded(i)) {
-            handler.loadImage(i, fragments.get(i));
-            imageLoaded.set(i, true);
+        if (!fragments.get(i).isImageLoaded()) {
+            handler.loadImage(i);
+            fragments.get(i).setImageLoaded(true);
         }
         return fragments.get(i);
     }

@@ -16,6 +16,8 @@ import com.viewer.R;
 public class ScreenSlidePageFragment extends Fragment {
 
     private ImageView imageView;
+    private boolean imageLoaded = false;
+    private Bitmap imageBitmap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -24,10 +26,22 @@ public class ScreenSlidePageFragment extends Fragment {
                 R.layout.fragment_image_slider, container, false);
 
         imageView = (ImageView) rootView.findViewById(R.id.imageView);
+        imageView.setImageBitmap(imageBitmap);
         return rootView;
     }
 
     public void loadImageBitmap(Bitmap bitmap) {
-        imageView.setImageBitmap(bitmap);
+        imageBitmap = bitmap;
+        if (imageView != null)
+            imageView.setImageBitmap(imageBitmap);
+        imageLoaded = true;
+    }
+
+    public boolean isImageLoaded() {
+        return imageLoaded;
+    }
+
+    public void setImageLoaded(boolean imageLoaded) {
+        this.imageLoaded = imageLoaded;
     }
 }

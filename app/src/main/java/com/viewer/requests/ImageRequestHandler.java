@@ -7,7 +7,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.viewer.view.ScreenSlidePageFragment;
 import com.viewer.view.adapters.ImagePagerAdapter;
 
 /**
@@ -17,7 +16,7 @@ public class ImageRequestHandler extends ClientRequestHandler {
 
     private final long userid = 1;
     private ImagePagerAdapter adapter;
-    private ScreenSlidePageFragment fragment;
+    private int index;
 
     private static final String urlPath = "/PictureViewerRestServer/rest/viewer/image";
 
@@ -26,10 +25,10 @@ public class ImageRequestHandler extends ClientRequestHandler {
         this.adapter = adapter;
     }
 
-    public void loadImage(int index, ScreenSlidePageFragment fragment) {
+    public void loadImage(int index) {
         long photoId = adapter.getPhotoInfos().get(index).getId();
         sendImageRequest(urlPath + "?usr=" + userid + "&photoid=" + photoId);
-        this.fragment = fragment;
+        this.index = index;
     }
 
     private void sendImageRequest(String url) {
@@ -51,8 +50,15 @@ public class ImageRequestHandler extends ClientRequestHandler {
 
     private void onImageResponse(String response) {
         Bitmap bitmap = decodeImage(response);
-        fragment.loadImageBitmap(bitmap);
+        adapter.getFragments().get(index).loadImageBitmap(bitmap);
         adapter.notifyDataSetChanged();
+
+        index++;
+        if (index >= adapter.getFragments().size())
+            index = 0;
+        if (!adapter.getFragments().get(index).isImageLoaded()) {
+            loadImage(index);
+        }
     }
 
     private void onClientErrorResponse(VolleyError error) {
