@@ -27,6 +27,7 @@ public class ScreenSlidePageFragment extends Fragment {
 
         imageView = (ImageView) rootView.findViewById(R.id.imageView);
         imageView.setImageBitmap(imageBitmap);
+        setRetainInstance(true);
         return rootView;
     }
 

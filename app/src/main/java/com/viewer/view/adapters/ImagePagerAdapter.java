@@ -30,7 +30,9 @@ public class ImagePagerAdapter extends FragmentStatePagerAdapter {
 
     private void generateFragments() {
         fragments = new ArrayList<ScreenSlidePageFragment>();
+
         for (int i = 0; i < photoInfos.size(); i++) {
+            // Fetch Existing Fragments
             fragments.add(new ScreenSlidePageFragment());
         }
     }

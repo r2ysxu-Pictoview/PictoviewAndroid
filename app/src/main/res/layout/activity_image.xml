@@ -9,8 +9,8 @@
     tools:context="com.viewer.activity.ImageActivity">
 
     <android.support.v4.view.ViewPager
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/image_pager"/>
 
 </RelativeLayout>
