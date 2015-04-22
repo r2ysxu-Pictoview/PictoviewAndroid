@@ -52,13 +52,7 @@ public class ImageRequestHandler extends ClientRequestHandler {
         Bitmap bitmap = decodeImage(response);
         adapter.getFragments().get(index).loadImageBitmap(bitmap);
         adapter.notifyDataSetChanged();
-
-        index++;
-        if (index >= adapter.getFragments().size())
-            index = 0;
-        if (!adapter.getFragments().get(index).isImageLoaded()) {
-            loadImage(index);
-        }
+        adapter.prefetchNextFragment(index++);
     }
 
     private void onClientErrorResponse(VolleyError error) {

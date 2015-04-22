@@ -47,6 +47,15 @@ public class ImagePagerAdapter extends FragmentStatePagerAdapter {
         return fragments;
     }
 
+    public void prefetchNextFragment(int index) {
+        ImageRequestHandler handler = new ImageRequestHandler(context, this);
+        if (index >= getFragments().size())
+            index = 0;
+        if (!getFragments().get(index).isImageLoaded()) {
+            handler.loadImage(index);
+        }
+    }
+
     @Override
     public Fragment getItem(int i) {
         ImageRequestHandler handler = new ImageRequestHandler(context, this);
